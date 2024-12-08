@@ -1,0 +1,40 @@
+<interface>
+  <object class="GtkWindow" id="main_window">
+    <property name="title">Contact Manager</property>
+    <property name="default-width">400</property>
+    <property name="default-height">300</property>
+    <signal name="destroy" handler="gtk_main_quit" swapped="no"/>
+    <child>
+      <object class="GtkGrid">
+        <property name="row-homogeneous">True</property>
+        <property name="column-homogeneous">True</property>
+        <child>
+          <object class="GtkEntry" id="entry_name">
+            <property name="placeholder-text">Name</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_phone">
+            <property name="placeholder-text">Phone</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_address">
+            <property name="placeholder-text">Address</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkEntry" id="entry_email">
+            <property name="placeholder-text">Email</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="add_button">
+            <property name="label">Add Contact</property>
+            <signal name="clicked" handler="on_add_contact_clicked" swapped="no"/>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
