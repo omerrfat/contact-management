@@ -10,7 +10,7 @@
 #define MAX_EMAIL 50
 #define MAX_DATE 11 // Format: YYYY-MM-DD
 
-// Add these encryption functions at the beginning of the file
+// encryption/decryption functions
 #define ENCRYPTION_KEY 7
 
 void encrypt(char text[])
@@ -67,10 +67,10 @@ typedef struct Contact
     struct Contact *next;
 } Contact;
 
-// Global head pointer
+// global head pointer
 Contact *head = NULL;
 
-// Validation functions
+// validation functions
 int isValidPhone(const char *phone)
 {
     for (int i = 0; phone[i] != '\0'; i++)
@@ -96,7 +96,7 @@ int isValidEmail(const char *email)
     return at_found;
 }
 
-// Helper function to get the current date in YYYY-MM-DD format
+// helper function to get the current date in YYYY-MM-DD format
 void getCurrentDate(char *dateBuffer)
 {
     time_t now = time(NULL);
@@ -104,7 +104,7 @@ void getCurrentDate(char *dateBuffer)
     strftime(dateBuffer, MAX_DATE, "%d-%m-%Y", t);
 }
 
-// Function to save all contacts to the file
+// function to save all contacts to the file
 void saveContactsToFile()
 {
     FILE *file = fopen("contact.txt", "w");
@@ -137,7 +137,7 @@ void saveContactsToFile()
     fclose(file);
 }
 
-// Function to insert a contact while maintaining sorted order
+// function to insert a contact while maintaining sorted order
 void addContact(const char *name, const char *phone, const char *address, const char *email)
 {
     if (!isValidPhone(phone))
@@ -176,12 +176,11 @@ void addContact(const char *name, const char *phone, const char *address, const 
         current->next = newContact;
     }
 
-    // ここに暗号化
     saveContactsToFile();
     printf("Contact has been added with date: %s.\n", newContact->dateAdded);
 }
 
-// Function to load contacts from file
+// function to load contacts from file
 void loadContacts()
 {
     FILE *file = fopen("contact.txt", "r");
@@ -230,7 +229,7 @@ void loadContacts()
     fclose(file);
 }
 
-// Function to display all contacts
+// function to display all contacts
 void displayAllContacts()
 {
     if (head == NULL)
@@ -248,7 +247,7 @@ void displayAllContacts()
         current = current->next;
     }
 }
-// Search contact
+// search contact
 void searchContact(int searchType, const char *query)
 {
     Contact *current = head;
@@ -285,7 +284,7 @@ void searchContact(int searchType, const char *query)
     }
 }
 
-// Delete contact
+// delete contact
 void deleteContact(const char *name)
 {
     if (head == NULL)
@@ -323,7 +322,7 @@ void deleteContact(const char *name)
     printf("Contact has been deleted.\n");
 }
 
-// Edit contact
+// edit contact
 void editContact(const char *name)
 {
     Contact *current = head;
@@ -369,7 +368,7 @@ void editContact(const char *name)
     printf("Contact not found.\n");
 }
 
-// Sort contacts
+// sort contacts
 void sortContacts()
 {
     if (head == NULL)
@@ -378,7 +377,7 @@ void sortContacts()
         return;
     }
 
-    // Bubble sort for linked list
+    // bubble sort for linked list
     int swapped;
     Contact *ptr1;
     Contact *lptr = NULL;
@@ -422,7 +421,7 @@ void sortContacts()
     printf("Contacts have been sorted successfully.\n");
 }
 
-// Advanced search function
+// advanced search function
 void advancedSearch()
 {
     if (head == NULL)
@@ -538,7 +537,7 @@ void advancedSearch()
     }
 }
 
-// Filter contacts by date range
+// filter contacts by date range
 void filterContactsByDate(const char *startDate, const char *endDate)
 {
     if (head == NULL)
@@ -553,7 +552,7 @@ void filterContactsByDate(const char *startDate, const char *endDate)
     printf("\nContacts added between %s and %s:\n", startDate, endDate);
     while (current != NULL)
     {
-        // Ensure the date matches or is within the range
+        // making sure the date matches or is within the range
         if (strcmp(current->dateAdded, startDate) >= 0 && strcmp(current->dateAdded, endDate) <= 0)
         {
             printf("Name: %s, Phone: %s, Address: %s, Email: %s, Date Added: %s\n",
@@ -569,20 +568,20 @@ void filterContactsByDate(const char *startDate, const char *endDate)
     }
 }
 
-// Function to filter by the dates
+// function to filter by the dates
 void filterMenu()
 {
     char startDate[MAX_DATE], endDate[MAX_DATE];
     char currentDate[MAX_DATE];
 
-    // Getting the current date
+    // getting the current date
     getCurrentDate(currentDate);
 
     printf("Enter start date (DD-MM-YYYY): ");
     fgets(startDate, MAX_DATE, stdin);
     startDate[strcspn(startDate, "\n")] = '\0'; // Remove trailing newline
 
-    // Clear the input buffer to avoid issues with leftover characters
+    // clear the input buffer to avoid issues with leftover characters
     while (getchar() != '\n' && getchar() != EOF)
     {
     }
@@ -627,10 +626,10 @@ int main()
         {
             printf("INVALID INPUT. Please enter a number.\n");
             while (getchar() != '\n')
-                ; // Clear invalid input from buffer
+                ; // clear invalid input from buffer
             continue;
         }
-        getchar(); // Remove newline character
+        getchar(); // remove newline character
         switch (choice)
         {
         case 1:
@@ -656,10 +655,10 @@ int main()
             {
                 printf("INVALID INPUT. Please choose a valid option.\n");
                 while (getchar() != '\n')
-                    ; // Clear invalid input from buffer
+                    ; // clear invalid input from buffer
                 continue;
             }
-            getchar(); // Remove newline character
+            getchar(); // remove newline character
             printf("Enter search term: ");
             fgets(input, MAX_NAME, stdin);
             input[strcspn(input, "\n")] = '\0';
